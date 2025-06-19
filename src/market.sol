@@ -14,7 +14,7 @@ contract Marketplace {
     }
 
     uint public itemCount;
-    mapping(uint => Item) public items;
+    mapping(uint => Item) public itemsuint; 
     mapping(address => uint[]) public userPurchasedItems;
 
     event ItemListed(uint indexed id, address indexed seller, string name, uint price);
@@ -24,7 +24,7 @@ contract Marketplace {
         require(price > 0, "Price must be greater than zero");
 
         itemCount++;
-        items[itemCount] = Item({
+        itemsuint[itemCount] = Item({
             id: itemCount,
             seller: payable(msg.sender),
             name: name,
@@ -37,7 +37,7 @@ contract Marketplace {
     }
 
     function purchaseItem(uint itemId) external payable {
-        Item storage item = items[itemId];
+        Item storage item = itemsuint[itemId];
 
         require(item.id != 0, "Item does not exist");
         require(!item.isSold, "Item already sold");
@@ -54,7 +54,7 @@ contract Marketplace {
     }
 
     function getItem(uint itemId) external view returns (uint, address, string memory, uint, bool, address) {
-        Item storage item = items[itemId];
+        Item storage item = itemsuint[itemId];
         return (item.id, item.seller, item.name, item.price, item.isSold, item.buyer);
     }
 
